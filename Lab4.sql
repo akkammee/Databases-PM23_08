@@ -7,7 +7,7 @@ USE ShopInventory;
 GO
 
 -----------------------------------------------------------
--- 1. ПІДГОТОВКА ТАБЛИЦЬ ТА ВИПРАВЛЕННЯ NULL
+-- 1. ПІДГОТОВКА ТАБЛИЦЬ --
 -----------------------------------------------------------
 IF NOT EXISTS (SELECT * FROM sys.columns WHERE object_id = OBJECT_ID('Products') AND name = 'UCR')
 BEGIN
@@ -20,7 +20,7 @@ BEGIN
 END
 GO
 
--- Наводимо порядок у даних (замість NULL ставимо реальні значення)
+-- Наводимо порядок у даних
 UPDATE Products SET StockQuantity = 100 WHERE StockQuantity IS NULL;
 UPDATE Products SET UCR = SUSER_NAME(), DCR = GETDATE() WHERE UCR IS NULL;
 GO
@@ -77,7 +77,4 @@ BEGIN
 END;
 GO
 
------------------------------------------------------------
--- ТЕПЕР ПЕРЕВІРКА БУДЕ ПРАЦЮВАТИ БЕЗ ПОМИЛОК
------------------------------------------------------------
 SELECT ProductID, ProductName, UCR, DCR, ULC, DLC, StockQuantity FROM Products;
